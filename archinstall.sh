@@ -17,7 +17,7 @@ EFI_PARTITION=$2
 USERNAME=$3
 PASSWORD=$4
 HOSTNAME=$5
-#test
+
 echo y | pacman -S reflector
 
 #Update the system clock
