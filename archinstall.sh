@@ -106,19 +106,76 @@ verify_args() {
   esac
 }
 
-echo -n "Installing packages..."
-if [ "$HOSTNAME" == "desktop" ]; then
-  pacstrap /mnt base base-devel ranger tldr iwd grub efibootmgr os-prober vim git nvidia nvidia-settings xorg rxvt-unicode dmenu i3lock perl-json-xs perl-anyevent-i3 i3-gaps i3status acpi alsa-utils sysstat i3blocks xorg-xinit flameshot rofi neofetch htop compton ntfs-3g rsync papirus-icon-theme arc-solid-gtk-theme ttf-inconsolata ttf-croscore noto-fonts
-fi
-if [ "$HOSTNAME" == "laptop" ]; then
-  pacstrap /mnt base base-devel ranger tldr iwd grub efibootmgr os-prober vim git bbswitch bumblebee nvidia nvidia-settings xf86-video-intel xorg rxvt-unicode dmenu i3lock perl-json-xs perl-anyevent-i3 i3-gaps i3status acpi alsa-utils sysstat i3blocks xorg-xinit flameshot rofi neofetch htop compton ntfs-3g rsync papirus-icon-theme arc-solid-gtk-theme ttf-inconsolata ttf-croscore noto-fonts
-fi
-genfstab -U /mnt >>/mnt/etc/fstab
-echo "done."
+create_programs_package_list() {
+  add_to_package_list
+}
 
-echo -n "chrooting..."
+create_desktop_package_list() {
+  add_to_package_list base
+  add_to_package_list base-devel
+  add_to_package_list linux-headers
+  add_to_package_list broadcom-wl-dkms
+  add_to_package_list grub
+  add_to_package_list efibootmgr
+  add_to_package_list os-prober
+  add_to_package_list nvidia
+  add_to_package_list nvidia-settings
+  add_to_package_list xorg
+  add_to_package_list xorg-xinit
+  add_to_package_list iwd
 
-reboot
+  ranger
+  tldr
+  vim
+  git
+  rxvt-unicode
+  dmenu
+  i3lock
+  perl-json-xs
+  perl-anyevent-i3
+  i3-gaps
+  i3status
+  acpi
+  alsa-utils
+  sysstat
+  i3blocks
+  flameshot
+  rofi
+  neofetch
+  htop
+  compton
+  ntfs-3g
+  rsync
+  papirus-icon-theme
+  arc-solid-gtk-theme
+  ttf-inconsolata
+  ttf-croscore
+  noto-fonts
+}
+
+create_laptop_package_list() {
+  add_to_package_list base
+  add_to_package_list base-devel
+  add_to_package_list grub
+  add_to_package_list efibootmgr
+  add_to_package_list os-prober
+  add_to_package_list bbswitch
+  add_to_package_list bumblebee
+  add_to_package_list nvidia
+  add_to_package_list nvidia-settings
+  add_to_package_list xf86-video-intel
+  add_to_package_list xorg
+  add_to_package_list xorg-xinit
+  add_to_package_list iwd
+}
+
+create_vm_package_list() {
+
+}
+
+add_to_package_list() {
+  PACKAGE_LIST=$PACKAGE_LIST" $1"
+}
 
 chroot_desktop() {
   cat <<EOF | arch-chroot /mnt
