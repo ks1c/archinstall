@@ -1,5 +1,15 @@
 #!/bin/bash
 
+###### PERSONAL ####
+##### ARCHLINUX ####
+#### INSTALATION ###
+
+#  #  #### #### ####
+###   #     ##  #
+#  #  ####  ##  #
+#  #     #  ##  #
+#  #  #### #### ####
+
 #Verify if number of args are "not equal" 5
 if [ $# -ne 5 ]; then
   echo "linux_partition efi_partition username password hostname=laptop/desktop/vm"
@@ -17,31 +27,40 @@ EFI_PARTITION=$2
 USERNAME=$3
 PASSWORD=$4
 HOSTNAME=$5
+PACKAGE_LIST=""
 
-echo y | pacman -S reflector
-
-#Update the system clock
+echo -n "Updating the system clock..."
 timedatectl set-ntp true
+echo "done."
 
-echo -n "Atualizando mirrorlist..."
-reflector --country Brazil --protocol http --sort rate --save /etc/pacman.d/mirrorlist
-reflector --latest 50 --number 20 --protocol http --sort rate >>/etc/pacman.d/mirrorlist
-echo "pronto."
-
-echo -n "Formatando particao linux..."
+echo -n "Formatting the partition with the ext4 file system..."
 echo y | mkfs.ext4 $LINUX_PARTITION
-echo "pronto."
+echo "done."
 
-echo -n "Montando particao linux..."
+echo -n "Mounting linux partition..."
 mount $LINUX_PARTITION /mnt
-echo "pronto."
+echo "done."
 
-echo -n "Montando particao UFI..."
+echo -n "Mounting EFI partition..."
 mkdir /mnt/boot
 mount $EFI_PARTITION /mnt/boot
-echo "pronto."
+echo "done."
 
-echo -n "Instalando arch-linux..."
+case $HOSTNAME in
+
+desktop)
+  create_desktop_packages
+  ;;
+laptop)
+  create_laptop_packages
+  ;;
+vm)
+  create_vm_packages
+  ;;
+
+esac
+
+echo -n "Installing packages..."
 if [ "$HOSTNAME" == "desktop" ]; then
   pacstrap /mnt base base-devel ranger tldr iwd grub efibootmgr os-prober vim git nvidia nvidia-settings xorg rxvt-unicode dmenu i3lock perl-json-xs perl-anyevent-i3 i3-gaps i3status acpi alsa-utils sysstat i3blocks xorg-xinit flameshot rofi neofetch htop compton ntfs-3g rsync papirus-icon-theme arc-solid-gtk-theme ttf-inconsolata ttf-croscore noto-fonts
 fi
@@ -49,11 +68,14 @@ if [ "$HOSTNAME" == "laptop" ]; then
   pacstrap /mnt base base-devel ranger tldr iwd grub efibootmgr os-prober vim git bbswitch bumblebee nvidia nvidia-settings xf86-video-intel xorg rxvt-unicode dmenu i3lock perl-json-xs perl-anyevent-i3 i3-gaps i3status acpi alsa-utils sysstat i3blocks xorg-xinit flameshot rofi neofetch htop compton ntfs-3g rsync papirus-icon-theme arc-solid-gtk-theme ttf-inconsolata ttf-croscore noto-fonts
 fi
 genfstab -U /mnt >>/mnt/etc/fstab
-echo "pronto."
+echo "done."
 
-echo -n "entrando em chroot"
+echo -n "chrooting..."
 
-if [ "$HOSTNAME" == "desktop" ]; then
+reboot
+
+chroot_desktop() {
+
   cat <<EOF | arch-chroot /mnt
 grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
 grub-mkconfig -o /boot/grub/grub.cfg
@@ -75,9 +97,11 @@ git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 chown $3 -R /home/$3/
 EOF
-fi
 
-if [ "$HOSTNAME" == "laptop" ]; then
+}
+
+chroot_laptop() {
+
   cat <<EOF | arch-chroot /mnt
 grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
 grub-mkconfig -o /boot/grub/grub.cfg
@@ -102,8 +126,12 @@ chown $3 -R /home/$3/
 gpasswd -a $3 bumblebee
 systemctl enable bumblebeed.service
 EOF
-fi
-reboot
+
+}
+
+chroot_vm() {
+
+}
 
 # start/enable iwd.service
 # iwctl
