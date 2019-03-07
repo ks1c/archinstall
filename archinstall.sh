@@ -1,8 +1,8 @@
 #!/bin/bash
 
-###### PERSONAL ####
-##### ARCHLINUX ####
-#### INSTALATION ###
+##### PERSONAL #####
+#### ARCHLINUX #####
+### INSTALATION ####
 
 #  #  #### ###  ####
 ###   #     ##  #
@@ -16,13 +16,13 @@ PASSWORD=$3
 LINUX_PARTITION=$4
 EFI_PARTITION=$5
 PACKAGE_LIST=""
+ERROR_USAGE="usage hostname=laptop/desktop/vm username password linux_partition efi_partition"
 
 main() {
 
   verify_args
 
   case $HOSTNAME in
-
   desktop)
     install_for_desktop
     ;;
@@ -33,10 +33,9 @@ main() {
     install_for_vm
     ;;
   *)
-    echo "hostname=laptop/desktop/vm username password linux_partition efi_partition"
+    echo $ERROR_USAGE
     exit 1
     ;;
-
   esac
 }
 
@@ -46,24 +45,28 @@ verify_args() {
     [ "$USERNAME" == "" ] ||
     [ "$PASSWORD" == "" ] ||
     [ "$LINUX_PARTITION" == "" ]; then
-    echo echo "hostname=laptop/desktop/vm username password linux_partition efi_partition"
+    echo $ERROR_USAGE
     exit 1
   fi
 
   if [ "$EFI_PARTITION" == "" ] && [ "$HOSTNAME" != "vm" ]; then
-    echo echo "hostname=laptop/desktop/vm username password linux_partition efi_partition"
+    echo $ERROR_USAGE
     exit 1
   fi
 
-  read -p "Continue (y/n)?" choice
+  echo -e "\nhostname = $HOSTNAME"
+  echo "username = $USERNAME"
+  echo "password = $PASSWORD"
+  echo "linux_partition = $LINUX_PARTITION"
+  echo -e "efi_partition = $EFI_PARTITION\n"
+
+  read -p "Continue (y/n)? " choice
   case $choice in
-  y | Y) echo "yes" ;;
+  y | Y) ;;
   n | N)
-    echo "no"
     exit 1
     ;;
   *)
-    echo "invalid"
     exit 1
     ;;
   esac
