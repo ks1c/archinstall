@@ -20,7 +20,7 @@ HOSTNAME=$5
 
 echo y | pacman -S reflector
 
-#Atualiza relógio
+#Update the system clock
 timedatectl set-ntp true
 
 echo -n "Atualizando mirrorlist..."
