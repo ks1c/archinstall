@@ -22,19 +22,46 @@ main() {
 
   verify_args
 
+  echo -n "Updating the system clock..."
+  timedatectl set-ntp true
+  echo "done."
+
+  echo -n "Formatting the partition with the ext4 file system..."
+  echo y | mkfs.ext4 $LINUX_PARTITION
+  echo "done."
+
+  echo -n "Mounting linux partition..."
+  mount $LINUX_PARTITION /mnt
+  echo "done."
+
+  if [ $HOSTNAME != "vm" ]; then
+    echo -n "Mounting EFI partition..."
+    mkdir /mnt/boot
+    mount $EFI_PARTITION /mnt/boot
+    echo "done."
+  fi
+
   case $HOSTNAME in
   desktop)
-    install_for_desktop
+    #INSTALLING FOR DESKTOP
+    create_desktop_package_list
+    pacstrap /mnt $PACKAGE_LIST
+    genfstab -U /mnt >>/mnt/etc/fstab
+    chroot_desktop
     ;;
   laptop)
-    install_for_laptop
+    #INSTALLING FOR LAPTOP
+    create_laptop_package_list
+    pacstrap /mnt $PACKAGE_LIST
+    genfstab -U /mnt >>/mnt/etc/fstab
+    chroot_laptop
     ;;
   vm)
-    install_for_vm
-    ;;
-  *)
-    echo $ERROR_USAGE
-    exit 1
+    #INSTALLING FOR VM
+    create_vm_package_list
+    pacstrap /mnt $PACKAGE_LIST
+    genfstab -U /mnt >>/mnt/etc/fstab
+    chroot_vm
     ;;
   esac
 }
@@ -45,6 +72,13 @@ verify_args() {
     [ "$USERNAME" == "" ] ||
     [ "$PASSWORD" == "" ] ||
     [ "$LINUX_PARTITION" == "" ]; then
+    echo $ERROR_USAGE
+    exit 1
+  fi
+
+  if [ "$HOSTNAME" != "desktop" ] &&
+    [ "$HOSTNAME" != "laptop" ] &&
+    [ "$HOSTNAME" != "vm" ]; then
     echo $ERROR_USAGE
     exit 1
   fi
@@ -72,37 +106,6 @@ verify_args() {
   esac
 }
 
-echo -n "Updating the system clock..."
-timedatectl set-ntp true
-echo "done."
-
-echo -n "Formatting the partition with the ext4 file system..."
-echo y | mkfs.ext4 $LINUX_PARTITION
-echo "done."
-
-echo -n "Mounting linux partition..."
-mount $LINUX_PARTITION /mnt
-echo "done."
-
-echo -n "Mounting EFI partition..."
-mkdir /mnt/boot
-mount $EFI_PARTITION /mnt/boot
-echo "done."
-
-case $HOSTNAME in
-
-desktop)
-  create_desktop_package_list
-  ;;
-laptop)
-  create_laptop_package_list
-  ;;
-vm)
-  create_vm_package_list
-  ;;
-
-esac
-
 echo -n "Installing packages..."
 if [ "$HOSTNAME" == "desktop" ]; then
   pacstrap /mnt base base-devel ranger tldr iwd grub efibootmgr os-prober vim git nvidia nvidia-settings xorg rxvt-unicode dmenu i3lock perl-json-xs perl-anyevent-i3 i3-gaps i3status acpi alsa-utils sysstat i3blocks xorg-xinit flameshot rofi neofetch htop compton ntfs-3g rsync papirus-icon-theme arc-solid-gtk-theme ttf-inconsolata ttf-croscore noto-fonts
@@ -118,7 +121,6 @@ echo -n "chrooting..."
 reboot
 
 chroot_desktop() {
-
   cat <<EOF | arch-chroot /mnt
 grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
 grub-mkconfig -o /boot/grub/grub.cfg
@@ -140,11 +142,9 @@ git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 chown $3 -R /home/$3/
 EOF
-
 }
 
 chroot_laptop() {
-
   cat <<EOF | arch-chroot /mnt
 grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
 grub-mkconfig -o /boot/grub/grub.cfg
@@ -169,7 +169,6 @@ chown $3 -R /home/$3/
 gpasswd -a $3 bumblebee
 systemctl enable bumblebeed.service
 EOF
-
 }
 
 chroot_vm() {
