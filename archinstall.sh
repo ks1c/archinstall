@@ -10,24 +10,64 @@
 #  #     #  ##  #
 #  #  #### #### ####
 
-#Verify if number of args are "not equal" 5
-if [ $# -ne 5 ]; then
-  echo "linux_partition efi_partition username password hostname=laptop/desktop/vm"
-  exit 1
-fi
-
-#Verify if hostname is correct
-if [ $5 != laptop ] && [ $5 != desktop ] && [ $5 != vm ]; then
-  echo "hostname must be laptop/desktop/vm"
-  exit 1
-fi
-
-LINUX_PARTITION=$1
-EFI_PARTITION=$2
-USERNAME=$3
-PASSWORD=$4
-HOSTNAME=$5
+HOSTNAME=$1
+USERNAME=$2
+PASSWORD=$3
+LINUX_PARTITION=$4
+EFI_PARTITION=$5
 PACKAGE_LIST=""
+
+main() {
+
+  verify_args
+
+  case $HOSTNAME in
+
+  desktop)
+    install_for_desktop
+    ;;
+  laptop)
+    install_for_laptop
+    ;;
+  vm)
+    install_for_vm
+    ;;
+  *)
+    echo "hostname=laptop/desktop/vm username password linux_partition efi_partition"
+    exit 1
+    ;;
+
+  esac
+}
+
+verify_args() {
+
+  if [ "$HOSTNAME" == "" ] ||
+    [ "$USERNAME" == "" ] ||
+    [ "$PASSWORD" == "" ] ||
+    [ "$LINUX_PARTITION" == "" ]; then
+    echo echo "hostname=laptop/desktop/vm username password linux_partition efi_partition"
+    exit 1
+  fi
+
+  if [ "$EFI_PARTITION" == "" ] && [ "$HOSTNAME" != "vm" ]; then
+    echo echo "hostname=laptop/desktop/vm username password linux_partition efi_partition"
+    exit 1
+  fi
+
+  read -p "Continue (y/n)?" choice
+  case $choice in
+  y | Y) echo "yes" ;;
+  n | N)
+    echo "no"
+    exit 1
+    ;;
+  *)
+    echo "invalid"
+    exit 1
+    ;;
+  esac
+}
 
 echo -n "Updating the system clock..."
 timedatectl set-ntp true
@@ -49,13 +89,13 @@ echo "done."
 case $HOSTNAME in
 
 desktop)
-  create_desktop_packages
+  create_desktop_package_list
   ;;
 laptop)
-  create_laptop_packages
+  create_laptop_package_list
   ;;
 vm)
-  create_vm_packages
+  create_vm_package_list
   ;;
 
 esac
