@@ -1,11 +1,6 @@
 #!/bin/bash
 
-# start/enable iwd.service
-# iwctl
-# device list
-# station interface scan
-# station interface connect network_name
-# device interface show
+
 
 #Verify if args are empty. -e enable backslash escapes (\n)
 if [ $# == 0 ]; then
@@ -100,5 +95,12 @@ systemctl enable bumblebeed.service
 EOF
 fi
 reboot
+
+# start/enable iwd.service
+# iwctl
+# device list
+# station interface scan
+# station interface connect network_name
+# device interface show
 
 
