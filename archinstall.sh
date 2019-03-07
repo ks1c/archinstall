@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Verify if args are empty. -e enable backslash escapes (\n)
-if [ $# \< 5 ]; then
+if [ $# -ne 5 ]; then
   echo "linux_partition efi_partition user password laptop/desktop/vm"
 else
   exit 1
