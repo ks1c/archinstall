@@ -1,13 +1,21 @@
 #!/bin/bash
 
-#Verify if args are empty. -e enable backslash escapes (\n)
+#Verify if number of args are "not equal" 5
 if [ $# -ne 5 ]; then
-  echo "linux_partition efi_partition user password laptop/desktop/vm"
+  echo "linux_partition efi_partition username password hostname=laptop/desktop/vm"
+  exit 1
+fi
+
+if [ $5 != laptop ] && [ $5 != desktop ] && [ $5 != vm ]; then
+  echo "hostname must be laptop/desktop/vm"
   exit 1
 fi
 
 LINUX_PARTITION=$1
 EFI_PARTITION=$2
+USERNAME=$3
+PASSWORD=$4
+HOSTNAME=$5
 
 echo y | pacman -S reflector
 
