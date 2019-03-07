@@ -3,9 +3,10 @@
 #Verify if args are empty. -e enable backslash escapes (\n)
 if [ $# -ne 5 ]; then
   echo "linux_partition efi_partition user password laptop/desktop/vm"
-else
   exit 1
 fi
+
+LINUX_PARTITION=$1
 
 echo y | pacman -S reflector
 
