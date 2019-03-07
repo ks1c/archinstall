@@ -28,23 +28,23 @@ reflector --latest 50 --number 20 --protocol http --sort rate >>/etc/pacman.d/mi
 echo "pronto."
 
 echo -n "Formatando particao linux..."
-echo y | mkfs.ext4 $1
+echo y | mkfs.ext4 $LINUX_PARTITION
 echo "pronto."
 
 echo -n "Montando particao linux..."
-mount $1 /mnt
+mount $LINUX_PARTITION /mnt
 echo "pronto."
 
 echo -n "Montando particao UFI..."
 mkdir /mnt/boot
-mount $2 /mnt/boot
+mount $EFI_PARTITION /mnt/boot
 echo "pronto."
 
 echo -n "Instalando arch-linux..."
-if [ "$5" == "desktop" ]; then
+if [ "$HOSTNAME" == "desktop" ]; then
   pacstrap /mnt base base-devel ranger tldr iwd grub efibootmgr os-prober vim git nvidia nvidia-settings xorg rxvt-unicode dmenu i3lock perl-json-xs perl-anyevent-i3 i3-gaps i3status acpi alsa-utils sysstat i3blocks xorg-xinit flameshot rofi neofetch htop compton ntfs-3g rsync papirus-icon-theme arc-solid-gtk-theme ttf-inconsolata ttf-croscore noto-fonts
 fi
-if [ "$5" == "laptop" ]; then
+if [ "$HOSTNAME" == "laptop" ]; then
   pacstrap /mnt base base-devel ranger tldr iwd grub efibootmgr os-prober vim git bbswitch bumblebee nvidia nvidia-settings xf86-video-intel xorg rxvt-unicode dmenu i3lock perl-json-xs perl-anyevent-i3 i3-gaps i3status acpi alsa-utils sysstat i3blocks xorg-xinit flameshot rofi neofetch htop compton ntfs-3g rsync papirus-icon-theme arc-solid-gtk-theme ttf-inconsolata ttf-croscore noto-fonts
 fi
 genfstab -U /mnt >>/mnt/etc/fstab
@@ -52,7 +52,7 @@ echo "pronto."
 
 echo -n "entrando em chroot"
 
-if [ "$5" == "desktop" ]; then
+if [ "$HOSTNAME" == "desktop" ]; then
   cat <<EOF | arch-chroot /mnt
 grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
 grub-mkconfig -o /boot/grub/grub.cfg
@@ -76,7 +76,7 @@ chown $3 -R /home/$3/
 EOF
 fi
 
-if [ "$5" == "laptop" ]; then
+if [ "$HOSTNAME" == "laptop" ]; then
   cat <<EOF | arch-chroot /mnt
 grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
 grub-mkconfig -o /boot/grub/grub.cfg
