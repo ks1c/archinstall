@@ -6,6 +6,7 @@ if [ $# -ne 5 ]; then
   exit 1
 fi
 
+#Verify if hostname is correct
 if [ $5 != laptop ] && [ $5 != desktop ] && [ $5 != vm ]; then
   echo "hostname must be laptop/desktop/vm"
   exit 1
