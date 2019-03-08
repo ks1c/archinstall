@@ -181,7 +181,8 @@ create_vm_package_list() {
   add_to_package_list os-prober
   #add_to_package_list xf86-video-vesa
   #add_to_package_list mesa
-  #add_to_package_list virtualbox-guest-utils
+  add_to_package_list virtualbox-guest-modules-arch
+  add_to_package_list virtualbox-guest-utils
   add_to_package_list xorg
   add_to_package_list xorg-xinit
 
@@ -269,13 +270,14 @@ git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 chown $USERNAME -R /home/$USERNAME/
 
-{ echo 2; echo y; } | pacman -S virtualbox-guest-utils
 systemctl enable vboxservice.service
+
 EOF
 }
 
 main
 
+# { echo 2; echo y; } | pacman -S virtualbox-guest-utils
 # start/enable iwd.service
 # iwctl
 # device list
