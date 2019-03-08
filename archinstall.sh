@@ -22,6 +22,10 @@ main() {
 
   verify_args
 
+  echo -n "Setting the keyboard..."
+  loadkeys br-abnt2
+  echo "done."
+
   echo -n "Updating the system clock..."
   timedatectl set-ntp true
   echo "done."
@@ -180,22 +184,21 @@ add_to_package_list() {
 
 chroot_desktop() {
   cat <<EOF | arch-chroot /mnt
-grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
-grub-mkconfig -o /boot/grub/grub.cfg
+ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
+hwclock --systohc
+echo pt_BR.UTF-8 UTF-8 >> /etc/locale.gen
+echo en_US.UTF-8 UTF-8 >> /etc/locale.gen
+locale-gen
+echo LANG=pt_BR.UTF-8 > /etc/locale.conf
+echo KEYMAP=br-abnt2 > /etc/vconsole.conf
+echo $HOSTNAME > /etc/hostname
 { echo $PASSWORD; echo $PASSWORD; } | passwd
+
 useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-
-loadkeys br-abnt2
-echo KEYMAP=br-abnt2 > /etc/vconsole.conf
-ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
-hwclock --systohc
-echo $HOSTNAME >> /etc/hostname
-echo pt_BR.UTF-8 UTF-8 >> /etc/locale.gen
-echo pt_BR ISO-8859-1 >> /etc/locale.gen
-locale-gen
-echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
+grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
+grub-mkconfig -o /boot/grub/grub.cfg
 
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
@@ -206,59 +209,54 @@ EOF
 
 chroot_laptop() {
   cat <<EOF | arch-chroot /mnt
-grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
-grub-mkconfig -o /boot/grub/grub.cfg
+ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
+hwclock --systohc
+echo pt_BR.UTF-8 UTF-8 >> /etc/locale.gen
+echo en_US.UTF-8 UTF-8 >> /etc/locale.gen
+locale-gen
+echo LANG=pt_BR.UTF-8 > /etc/locale.conf
+echo KEYMAP=br-abnt2 > /etc/vconsole.conf
+echo $HOSTNAME > /etc/hostname
 { echo $PASSWORD; echo $PASSWORD; } | passwd
+
 useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
+grub-mkconfig -o /boot/grub/grub.cfg
 
-loadkeys br-abnt2
-echo KEYMAP=br-abnt2 > /etc/vconsole.conf
-ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
-hwclock --systohc
-echo $HOSTNAME >> /etc/hostname
-echo pt_BR.UTF-8 UTF-8 >> /etc/locale.gen
-echo pt_BR ISO-8859-1 >> /etc/locale.gen
-locale-gen
-echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
+gpasswd -a $USERNAME bumblebee
+systemctl enable bumblebeed.service
 
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 chown $USERNAME -R /home/$USERNAME/
-
-gpasswd -a $USERNAME bumblebee
-systemctl enable bumblebeed.service
 EOF
 }
 
 chroot_vm() {
   cat <<EOF | arch-chroot /mnt
-grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
-grub-mkconfig -o /boot/grub/grub.cfg
+ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
+hwclock --systohc
+echo pt_BR.UTF-8 UTF-8 >> /etc/locale.gen
+echo en_US.UTF-8 UTF-8 >> /etc/locale.gen
+locale-gen
+echo LANG=pt_BR.UTF-8 > /etc/locale.conf
+echo KEYMAP=br-abnt2 > /etc/vconsole.conf
+echo $HOSTNAME > /etc/hostname
 { echo $PASSWORD; echo $PASSWORD; } | passwd
+
 useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-
-loadkeys br-abnt2
-echo KEYMAP=br-abnt2 > /etc/vconsole.conf
-ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
-hwclock --systohc
-echo $HOSTNAME >> /etc/hostname
-echo pt_BR.UTF-8 UTF-8 >> /etc/locale.gen
-echo pt_BR ISO-8859-1 >> /etc/locale.gen
-locale-gen
-echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
+grub-install --recheck /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
 
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 chown $USERNAME -R /home/$USERNAME/
-
-gpasswd -a $USERNAME bumblebee
-systemctl enable bumblebeed.service
 EOF
 }
 
