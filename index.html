@@ -269,7 +269,7 @@ git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 chown $USERNAME -R /home/$USERNAME/
 
-echo 2 | pacman -S virtualbox-guest-utils
+{ echo 2; echo y; } | pacman -S virtualbox-guest-utils
 systemctl enable vboxservice.service
 EOF
 }
