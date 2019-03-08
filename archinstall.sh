@@ -107,7 +107,31 @@ verify_args() {
 }
 
 create_programs_package_list() {
-  add_to_package_list
+  add_to_package_list dmenu
+  add_to_package_list i3lock
+  add_to_package_list i3status
+  add_to_package_list perl-anyevent-i3
+  add_to_package_list perl-json-xs
+  add_to_package_list rxvt-unicode
+  add_to_package_list i3-gaps
+  add_to_package_list alsa-utils
+  add_to_package_list i3blocks
+  add_to_package_list rofi
+  add_to_package_list ntfs-3g
+  add_to_package_list rsync
+  add_to_package_list htop
+  add_to_package_list flameshot
+  add_to_package_list compton
+  add_to_package_list neofetch
+  add_to_package_list ranger
+  add_to_package_list tldr
+  add_to_package_list vim
+  add_to_package_list git
+  add_to_package_list papirus-icon-theme
+  add_to_package_list arc-solid-gtk-theme
+  add_to_package_list ttf-inconsolata
+  add_to_package_list ttf-croscore
+  add_to_package_list noto-fonts
 }
 
 create_desktop_package_list() {
@@ -124,33 +148,7 @@ create_desktop_package_list() {
   add_to_package_list xorg-xinit
   add_to_package_list iwd
 
-  ranger
-  tldr
-  vim
-  git
-  rxvt-unicode
-  dmenu
-  i3lock
-  perl-json-xs
-  perl-anyevent-i3
-  i3-gaps
-  i3status
-  acpi
-  alsa-utils
-  sysstat
-  i3blocks
-  flameshot
-  rofi
-  neofetch
-  htop
-  compton
-  ntfs-3g
-  rsync
-  papirus-icon-theme
-  arc-solid-gtk-theme
-  ttf-inconsolata
-  ttf-croscore
-  noto-fonts
+  create_programs_package_list
 }
 
 create_laptop_package_list() {
@@ -167,6 +165,9 @@ create_laptop_package_list() {
   add_to_package_list xorg
   add_to_package_list xorg-xinit
   add_to_package_list iwd
+  add_to_package_list acpi
+
+  create_programs_package_list
 }
 
 create_vm_package_list() {
@@ -181,23 +182,23 @@ chroot_desktop() {
   cat <<EOF | arch-chroot /mnt
 grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
 grub-mkconfig -o /boot/grub/grub.cfg
-{ echo $4; echo $4; } | passwd
-useradd -m -G wheel $3
-{ echo $4; echo $4; } | passwd $3
+{ echo $PASSWORD; echo $PASSWORD; } | passwd
+useradd -m -G wheel $USERNAME
+{ echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
 hwclock --systohc
-echo desktop >> /etc/hostname
+echo $HOSTNAME >> /etc/hostname
 echo pt_BR.UTF-8 UTF-8 >> /etc/locale.gen
 echo pt_BR ISO-8859-1 >> /etc/locale.gen
 locale-gen
 echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
 
-cd /home/$3/
+cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
-chown $3 -R /home/$3/
+chown $USERNAME -R /home/$USERNAME/
 EOF
 }
 
@@ -205,25 +206,25 @@ chroot_laptop() {
   cat <<EOF | arch-chroot /mnt
 grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
 grub-mkconfig -o /boot/grub/grub.cfg
-{ echo $4; echo $4; } | passwd
-useradd -m -G wheel $3
-{ echo $4; echo $4; } | passwd $3
+{ echo $PASSWORD; echo $PASSWORD; } | passwd
+useradd -m -G wheel $USERNAME
+{ echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
 hwclock --systohc
-echo laptop >> /etc/hostname
+echo $HOSTNAME >> /etc/hostname
 echo pt_BR.UTF-8 UTF-8 >> /etc/locale.gen
 echo pt_BR ISO-8859-1 >> /etc/locale.gen
 locale-gen
 echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
 
-cd /home/$3/
+cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
-chown $3 -R /home/$3/
+chown $USERNAME -R /home/$USERNAME/
 
-gpasswd -a $3 bumblebee
+gpasswd -a $USERNAME bumblebee
 systemctl enable bumblebeed.service
 EOF
 }
@@ -231,6 +232,8 @@ EOF
 chroot_vm() {
 
 }
+
+main
 
 # start/enable iwd.service
 # iwctl
