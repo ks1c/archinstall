@@ -187,6 +187,8 @@ useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
+loadkeys br-abnt2
+echo KEYMAP=br-abnt2 > /etc/vconsole.conf
 ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
 hwclock --systohc
 echo $HOSTNAME >> /etc/hostname
@@ -211,6 +213,8 @@ useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
+loadkeys br-abnt2
+echo KEYMAP=br-abnt2 > /etc/vconsole.conf
 ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
 hwclock --systohc
 echo $HOSTNAME >> /etc/hostname
@@ -238,6 +242,8 @@ useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
+loadkeys br-abnt2
+echo KEYMAP=br-abnt2 > /etc/vconsole.conf
 ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
 hwclock --systohc
 echo $HOSTNAME >> /etc/hostname
