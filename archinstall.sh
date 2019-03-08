@@ -175,7 +175,17 @@ create_laptop_package_list() {
 }
 
 create_vm_package_list() {
+  add_to_package_list base
+  add_to_package_list base-devel
+  add_to_package_list grub
+  add_to_package_list os-prober
+  #add_to_package_list xf86-video-vesa
+  #add_to_package_list mesa
+  add_to_package_list virtualbox-guest-utils
+  add_to_package_list xorg
+  add_to_package_list xinit
 
+  create_programs_package_list
 }
 
 add_to_package_list() {
@@ -252,6 +262,7 @@ useradd -m -G wheel $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 grub-install --recheck /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
+systemctl enable dhcpcd
 
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
