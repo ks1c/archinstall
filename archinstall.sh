@@ -181,9 +181,9 @@ create_vm_package_list() {
   add_to_package_list os-prober
   #add_to_package_list xf86-video-vesa
   #add_to_package_list mesa
-  add_to_package_list virtualbox-guest-utils
+  #add_to_package_list virtualbox-guest-utils
   add_to_package_list xorg
-  add_to_package_list xinit
+  add_to_package_list xorg-xinit
 
   create_programs_package_list
 }
@@ -268,6 +268,9 @@ cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 chown $USERNAME -R /home/$USERNAME/
+
+echo 2 | pacman -S virtualbox-guest-utils
+systemctl enable vboxservice.service
 EOF
 }
 
