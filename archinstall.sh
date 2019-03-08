@@ -230,7 +230,27 @@ EOF
 }
 
 chroot_vm() {
+  cat <<EOF | arch-chroot /mnt
+grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
+grub-mkconfig -o /boot/grub/grub.cfg
+{ echo $PASSWORD; echo $PASSWORD; } | passwd
+useradd -m -G wheel $USERNAME
+{ echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
+echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
+ln -sf /usr/share/zoneinfo/America/Campo_Grande /etc/localtime
+hwclock --systohc
+echo $HOSTNAME >> /etc/hostname
+echo pt_BR.UTF-8 UTF-8 >> /etc/locale.gen
+echo pt_BR ISO-8859-1 >> /etc/locale.gen
+locale-gen
+echo LANG=pt_BR.UTF-8 >> /etc/locale.conf
+
+cd /home/$USERNAME/
+git clone http://github.com/ks1c/scripts
+git clone http://github.com/ks1c/dotfiles
+chown $USERNAME -R /home/$USERNAME/
+EOF
 }
 
 main
