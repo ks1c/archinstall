@@ -136,6 +136,7 @@ create_programs_package_list() {
   add_to_package_list ttf-inconsolata
   add_to_package_list ttf-croscore
   add_to_package_list noto-fonts
+  add_to_package_list polkit
 }
 
 create_desktop_package_list() {
