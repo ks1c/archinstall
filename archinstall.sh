@@ -265,6 +265,7 @@ echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 grub-install --recheck /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable dhcpcd
+sed -i 's/#Color/Color/g' /etc/pacman.conf 
 
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
