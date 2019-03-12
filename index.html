@@ -280,6 +280,7 @@ cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 chown $USERNAME -R /home/$USERNAME/
+chgrp $USERNAME -R /home/$USERNAME/
 
 systemctl enable vboxservice.service
 
