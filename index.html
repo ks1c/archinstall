@@ -64,9 +64,9 @@ main() {
     ;;
   vm)
     #INSTALLING FOR VM
-    pacstrap /mnt base base-devel
-    genfstab -U /mnt >>/mnt/etc/fstab
     create_vm_package_list
+    pacstrap /mnt $PACKAGE_LIST
+    genfstab -U /mnt >>/mnt/etc/fstab
     chroot_vm
     ;;
   esac
@@ -185,12 +185,10 @@ create_laptop_package_list() {
 }
 
 create_vm_package_list() {
-  #add_to_package_list base
-  #add_to_package_list base-devel
+  add_to_package_list base
+  add_to_package_list base-devel
   add_to_package_list grub
   add_to_package_list os-prober
-  #add_to_package_list xf86-video-vesa
-  #add_to_package_list mesa
   add_to_package_list virtualbox-guest-modules-arch
   add_to_package_list virtualbox-guest-utils
   add_to_package_list xorg
@@ -272,9 +270,6 @@ useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
-pacman --noconfirm --needed -S reflector
-reflector --sort rate --save /etc/pacman.d/mirrorlist -c "Brazil" -f 5 -l 5
-pacman --noconfirm --needed -S $PACKAGE_LIST
 grub-install --recheck /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable dhcpcd
@@ -292,6 +287,9 @@ EOF
 
 main
 
+#pacman --noconfirm --needed -S $PACKAGE_LIST
+#pacman --noconfirm --needed -S reflector
+#reflector --sort rate --save /etc/pacman.d/mirrorlist -c "Brazil" -f 5 -l 5
 # { echo 2; echo y; } | pacman -S virtualbox-guest-utils
 # start/enable iwd.service
 # iwctl
