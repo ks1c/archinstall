@@ -68,6 +68,7 @@ main() {
     pacstrap /mnt $PACKAGE_LIST
     genfstab -U /mnt >>/mnt/etc/fstab
     chroot_vm
+    umount $LINUX_PARTITION
     ;;
   esac
 }
@@ -282,6 +283,7 @@ chown $USERNAME -R /home/$USERNAME/
 
 systemctl enable vboxservice.service
 
+exit
 EOF
 }
 
