@@ -301,3 +301,8 @@ main
 # station interface scan
 # station interface connect network_name
 # device interface show
+
+#X11 errors and warnings
+
+#keyboard
+#keys above 255 or error, comment the lines in /usr/share/X11/xkb/symbols/inet example <I372> or XF86MonBrightnessCycle
