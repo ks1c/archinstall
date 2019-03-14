@@ -3,5 +3,5 @@
 rm -rf index.html
 cp ./archinstall.sh ./index.html
 git add .
-git commit -m "."
+git commit -m "mkrls"
 git push -u origin master
