@@ -268,7 +268,7 @@ echo $HOSTNAME > /etc/hostname
 { echo $PASSWORD; echo $PASSWORD; } | passwd
 
 localectl set-x11-keymap br
-useradd -m -G wheel $USERNAME
+useradd -m -G wheel -s /bin/zsh $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
