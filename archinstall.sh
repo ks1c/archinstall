@@ -121,6 +121,7 @@ update_mirrors() {
 }
 
 create_programs_package_list() {
+  add_to_package_list fish
   add_to_package_list dmenu
   add_to_package_list i3lock
   add_to_package_list i3status
@@ -275,14 +276,12 @@ echo Option "XkbModel" "abnt2" >> /etc/X11/xorg.conf.d/00-keyboard.conf
 echo Option "XkbVariant" "abnt2" >> /etc/X11/xorg.conf.d/00-keyboard.conf
 echo EndSection >> /etc/X11/xorg.conf.d/00-keyboard.conf
 
-localectl set-x11-keymap br
-useradd -m -G wheel -s /bin/zsh $USERNAME
+useradd -m -G wheel -s /usr/bin/fish $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 grub-install --recheck /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
-systemctl enable dhcpcd
 sed -i 's/#Color/Color/g' /etc/pacman.conf 
 
 cd /home/$USERNAME/
@@ -291,6 +290,7 @@ git clone http://github.com/ks1c/dotfiles
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
+systemctl enable dhcpcd
 systemctl enable vboxservice.service
 
 exit
@@ -299,7 +299,6 @@ EOF
 
 main
 
-#keyboard /etc/X11/xorg.conf.d/00-keyboard.conf
 #pacman --noconfirm --needed -S $PACKAGE_LIST
 #pacman --noconfirm --needed -S reflector
 #reflector --sort rate --save /etc/pacman.d/mirrorlist -c "Brazil" -f 5 -l 5
