@@ -121,6 +121,7 @@ update_mirrors() {
 }
 
 create_programs_package_list() {
+  add_to_package_list fish
   add_to_package_list dmenu
   add_to_package_list i3lock
   add_to_package_list i3status
@@ -267,14 +268,20 @@ echo KEYMAP=br-abnt2 > /etc/vconsole.conf
 echo $HOSTNAME > /etc/hostname
 { echo $PASSWORD; echo $PASSWORD; } | passwd
 
-localectl set-x11-keymap br
-useradd -m -G wheel $USERNAME
+echo Section "InputClass" > /etc/X11/xorg.conf.d/00-keyboard.conf
+echo Identifier "system-keyboard" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo MatchIsKeyboard "on" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo Option "XkbLayout" "br" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo Option "XkbModel" "abnt2" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo Option "XkbVariant" "abnt2" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo EndSection >> /etc/X11/xorg.conf.d/00-keyboard.conf
+
+useradd -m -G wheel -s /usr/bin/fish $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 grub-install --recheck /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
-systemctl enable dhcpcd
 sed -i 's/#Color/Color/g' /etc/pacman.conf 
 
 cd /home/$USERNAME/
@@ -283,6 +290,7 @@ git clone http://github.com/ks1c/dotfiles
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
+systemctl enable dhcpcd
 systemctl enable vboxservice.service
 
 exit
@@ -301,3 +309,8 @@ main
 # station interface scan
 # station interface connect network_name
 # device interface show
+
+#X11 errors and warnings
+
+#keyboard
+#keys above 255 or error, comment the lines in /usr/share/X11/xkb/symbols/inet example <I372> or XF86MonBrightnessCycle
