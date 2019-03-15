@@ -267,6 +267,14 @@ echo KEYMAP=br-abnt2 > /etc/vconsole.conf
 echo $HOSTNAME > /etc/hostname
 { echo $PASSWORD; echo $PASSWORD; } | passwd
 
+echo Section "InputClass" > /etc/X11/xorg.conf.d/00-keyboard.conf
+echo Identifier "system-keyboard" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo MatchIsKeyboard "on" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo Option "XkbLayout" "br" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo Option "XkbModel" "abnt2" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo Option "XkbVariant" "abnt2" >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo EndSection >> /etc/X11/xorg.conf.d/00-keyboard.conf
+
 localectl set-x11-keymap br
 useradd -m -G wheel -s /bin/zsh $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
@@ -291,6 +299,7 @@ EOF
 
 main
 
+#keyboard /etc/X11/xorg.conf.d/00-keyboard.conf
 #pacman --noconfirm --needed -S $PACKAGE_LIST
 #pacman --noconfirm --needed -S reflector
 #reflector --sort rate --save /etc/pacman.d/mirrorlist -c "Brazil" -f 5 -l 5
