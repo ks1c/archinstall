@@ -276,7 +276,7 @@ echo 'Option "XkbModel" "abnt2"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
 echo 'Option "XkbVariant" "abnt2"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
 echo 'EndSection' >> /etc/X11/xorg.conf.d/00-keyboard.conf
 
-useradd -m -G wheel -s /usr/bin/fish $USERNAME
+useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
