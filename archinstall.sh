@@ -287,7 +287,7 @@ sed -i 's/#Color/Color/g' /etc/pacman.conf
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
-exec /home/$USERNAME/scripts/autorice.sh
+exec /home/$USERNAME/scripts/autorice.sh $USERNAME $HOSTNAME
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
