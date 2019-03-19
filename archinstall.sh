@@ -121,6 +121,8 @@ update_mirrors() {
 }
 
 create_programs_package_list() {
+  add_to_package_list libnotify
+  add_to_package_list dunst
   add_to_package_list fish
   add_to_package_list dmenu
   add_to_package_list i3lock
