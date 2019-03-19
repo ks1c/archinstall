@@ -152,6 +152,7 @@ create_programs_package_list() {
   add_to_package_list dunst
   add_to_package_list imagemagick
   add_to_package_list scrot
+  add_to_package_list xcursor-bluecurve
 }
 
 create_desktop_package_list() {
