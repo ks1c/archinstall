@@ -150,6 +150,8 @@ create_programs_package_list() {
   add_to_package_list polkit
   add_to_package_list libnotify
   add_to_package_list dunst
+  add_to_package_list imagemagick
+  add_to_package_list scrot
 }
 
 create_desktop_package_list() {
