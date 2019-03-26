@@ -128,6 +128,7 @@ create_programs_package_list() {
   add_to_package_list perl-anyevent-i3
   add_to_package_list perl-json-xs
   add_to_package_list rxvt-unicode
+  add_to_package_list termite
   add_to_package_list i3-gaps
   add_to_package_list alsa-utils
   add_to_package_list i3blocks
@@ -139,6 +140,7 @@ create_programs_package_list() {
   add_to_package_list compton
   add_to_package_list neofetch
   add_to_package_list ranger
+  add_to_package_list vifm
   add_to_package_list tldr
   add_to_package_list vim
   add_to_package_list git
