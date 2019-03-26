@@ -149,7 +149,7 @@ create_programs_package_list() {
   add_to_package_list ttf-inconsolata
   add_to_package_list ttf-croscore
   add_to_package_list noto-fonts
-  add_to_package_list ttf-font-awesome
+  add_to_package_list otf-font-awesome
   add_to_package_list noto-fonts-emoji
   add_to_package_list polkit
   add_to_package_list libnotify
