@@ -142,7 +142,7 @@ create_programs_package_list() {
   add_to_package_list ranger
   add_to_package_list vifm
   add_to_package_list tldr
-  add_to_package_list vim
+  add_to_package_list neovim
   add_to_package_list git
   add_to_package_list papirus-icon-theme
   add_to_package_list arc-solid-gtk-theme
