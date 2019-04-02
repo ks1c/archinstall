@@ -158,6 +158,7 @@ create_programs_package_list() {
   add_to_package_list scrot
   add_to_package_list xcursor-bluecurv
   add_to_package_list pacman-contrib
+  add_to_package_list ncdu
 }
 
 create_desktop_package_list() {
