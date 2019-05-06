@@ -22,10 +22,6 @@ main() {
 
   verify_args
 
-  echo -n "Setting the keyboard..."
-  loadkeys br-abnt2
-  echo "done."
-
   echo -n "Updating the system clock..."
   timedatectl set-ntp true
   echo "done."
