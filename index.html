@@ -265,7 +265,7 @@ useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
-grub-install --target=x87_64-efi --efi-directory=/boot/ --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 
