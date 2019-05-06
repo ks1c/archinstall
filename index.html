@@ -296,6 +296,7 @@ systemctl enable iwd.service
 systemctl enable dhcpcd@wlp3s0.service
 systemctl enable vnstat.service
 
+exit
 EOF
 }
 
