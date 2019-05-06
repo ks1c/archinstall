@@ -121,43 +121,59 @@ update_mirrors() {
 }
 
 create_programs_package_list() {
+
+  #Current shell
   add_to_package_list fish
+
+  #Current terminal emulator
+  add_to_package_list termite
+
+  #Window manager and bar
   add_to_package_list dmenu
   add_to_package_list i3lock
-  add_to_package_list i3status
   add_to_package_list perl-anyevent-i3
   add_to_package_list perl-json-xs
-  add_to_package_list rxvt-unicode
-  add_to_package_list termite
   add_to_package_list i3-gaps
   add_to_package_list alsa-utils
   add_to_package_list i3blocks
-  add_to_package_list rofi
+
+  #Appearance
+  add_to_package_list xcursor-bluecurv
+  add_to_package_list papirus-icon-theme
+  add_to_package_list arc-solid-gtk-theme
+
+  #Fonts
+  add_to_package_list ttf-inconsolata
+  add_to_package_list ttf-croscore
+  add_to_package_list noto-fonts-emoji
+  add_to_package_list awesome-terminal-fonts
+
+  #General programs and tools
+  add_to_package_list compton			# Screen compositor
+  add_to_package_list xwallpaper		# X utility for setting wallpaper
+  add_to_package_list libnotify
+  add_to_package_list flameshot                 # Screen-shot capture tool
+  add_to_package_list dunst
+  add_to_package_list xdotool
+  add_to_package_list telegram-desktop
+  add_to_package_list when                      # Calendar
+  add_to_package_list calc                      # Calculator
+  add_to_package_list sxiv			# Simple X image viwer
   add_to_package_list ntfs-3g
   add_to_package_list rsync
   add_to_package_list htop
-  add_to_package_list flameshot
-  add_to_package_list compton
   add_to_package_list neofetch
-  add_to_package_list ranger
   add_to_package_list vifm
   add_to_package_list tldr
-  add_to_package_list vim
+  add_to_package_list neovim
   add_to_package_list git
-  add_to_package_list papirus-icon-theme
-  add_to_package_list arc-solid-gtk-theme
-  add_to_package_list ttf-inconsolata
-  add_to_package_list ttf-croscore
-  add_to_package_list noto-fonts
-  add_to_package_list noto-fonts-emoji
-  add_to_package_list awesome-terminal-fonts
   add_to_package_list polkit
-  add_to_package_list libnotify
-  add_to_package_list dunst
   add_to_package_list imagemagick
   add_to_package_list scrot
-  add_to_package_list xcursor-bluecurv
-  add_to_package_list pacman-contribe
+  add_to_package_list pacman-contrib
+  add_to_package_list ncdu
+  add_to_package_list vnstat
+  add_to_package_list firefox
 }
 
 create_desktop_package_list() {
@@ -250,11 +266,21 @@ echo KEYMAP=br-abnt2 > /etc/vconsole.conf
 echo $HOSTNAME > /etc/hostname
 { echo $PASSWORD; echo $PASSWORD; } | passwd
 
+echo 'Section "InputClass"' > /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'Identifier "system-keyboard"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'MatchIsKeyboard "on"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'Option "XkbLayout" "br"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'Option "XkbModel" "abnt2"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'Option "XkbVariant" "abnt2"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'EndSection' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+
 useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
+
+grub-install --target=x87_64-efi --efi-directory=/boot/ --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
+sed -i 's/#Color/Color/g' /etc/pacman.conf
 
 gpasswd -a $USERNAME bumblebee
 systemctl enable bumblebeed.service
@@ -262,7 +288,14 @@ systemctl enable bumblebeed.service
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
+bash /home/$USERNAME/scripts/autorice.sh $USERNAME $HOSTNAME
 chown $USERNAME -R /home/$USERNAME/
+chgrp $USERNAME -R /home/$USERNAME/
+
+systemctl enable iwd.service
+systemctl enable dhcpcd@wlp3s0.service
+systemctl enable vnstat.service
+
 EOF
 }
 
@@ -292,7 +325,7 @@ echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
 grub-install --recheck /dev/sda
 grub-mkconfig -o /boot/grub/grub.cfg
-sed -i 's/#Color/Color/g' /etc/pacman.conf 
+sed -i 's/#Color/Color/g' /etc/pacman.conf
 
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
