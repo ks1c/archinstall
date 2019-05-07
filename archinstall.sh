@@ -169,8 +169,8 @@ create_programs_package_list() {
   add_to_package_list pacman-contrib
   add_to_package_list ncdu
   add_to_package_list vnstat
-  add_to_package_list firefox
-  add_to_package_list go
+  #add_to_package_list firefox
+  #add_to_package_list go
 }
 
 create_desktop_package_list() {
