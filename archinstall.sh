@@ -275,9 +275,11 @@ systemctl enable bumblebeed.service
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 bash /home/$USERNAME/scripts/autorice.sh $USERNAME $HOSTNAME
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
+vim +PluginInstall +qall
 
 systemctl enable iwd.service
 systemctl enable dhcpcd@wlp3s0.service
