@@ -280,7 +280,7 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 bash /home/$USERNAME/scripts/autorice.sh $USERNAME $HOSTNAME
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
-vim +PluginInstall +qall
+nvim +PluginInstall +qall
 
 systemctl enable iwd.service
 systemctl enable dhcpcd@wlp3s0.service
@@ -324,7 +324,7 @@ git clone http://github.com/ks1c/dotfiles
 git clone https://aur.archlinux.org/yay.git
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-vim +PluginInstall +qall
+nvim +PluginInstall +qall
 
 bash /home/$USERNAME/scripts/autorice.sh $USERNAME $HOSTNAME
 
