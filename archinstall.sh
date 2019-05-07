@@ -139,11 +139,12 @@ create_programs_package_list() {
   add_to_package_list arc-solid-gtk-theme
 
   #Fonts
-  add_to_package_list ttf-inconsolata
-  add_to_package_list ttf-croscore
-  add_to_package_list noto-fonts-emoji
-  add_to_package_list awesome-terminal-fonts
-  add_to_package_list powerline-fonts
+  add_to_package_list ttf-inconsolata           # My monospace font of preference
+  add_to_package_list ttf-croscore		# Google serif/sans fonts
+  add_to_package_list noto-fonts-emoji		# emoji fonts
+  add_to_package_list awesome-terminal-fonts	# symbols/glyphs for bars, etc
+  add_to_package_list powerline-fonts		# font for statusline in vim
+  add_to_package_list noto-fonts		# extra symbols used for statusline in vim
 
   #General programs and tools
   add_to_package_list compton			# Screen compositor
@@ -152,6 +153,7 @@ create_programs_package_list() {
   add_to_package_list flameshot                 # Screen-shot capture tool
   add_to_package_list dunst
   add_to_package_list xdotool
+  add_to_package_list xclip
   add_to_package_list telegram-desktop
   add_to_package_list when                      # Calendar
   add_to_package_list calc                      # Calculator
