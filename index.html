@@ -143,6 +143,7 @@ create_programs_package_list() {
   add_to_package_list ttf-croscore
   add_to_package_list noto-fonts-emoji
   add_to_package_list awesome-terminal-fonts
+  add_to_package_list powerline-fonts
 
   #General programs and tools
   add_to_package_list compton			# Screen compositor
