@@ -170,6 +170,7 @@ create_programs_package_list() {
   add_to_package_list ncdu
   add_to_package_list vnstat
   add_to_package_list firefox
+  add_to_package_list go
 }
 
 create_desktop_package_list() {
@@ -320,7 +321,13 @@ sed -i 's/#Color/Color/g' /etc/pacman.conf
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
+git clone https://aur.archlinux.org/yay.git
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+vim +PluginInstall +qall
+
 bash /home/$USERNAME/scripts/autorice.sh $USERNAME $HOSTNAME
+
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
