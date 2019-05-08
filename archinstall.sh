@@ -281,7 +281,7 @@ git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 git clone https://github.com/VundleVim/Vundle.vim.git /home/$USERNAME/.vim/bundle/Vundle.vim
 git clone https://aur.archlinux.org/yay.git
-echo "exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME" \
+echo "exec iwctl && exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
 > /home/$USERNAME/.bash_profile
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
