@@ -162,9 +162,10 @@ create_programs_package_list() {
   add_to_package_list rsync
   add_to_package_list htop
   add_to_package_list neofetch
-  add_to_package_list vifm
+  add_to_package_list vifm			# Terminal based file manager
+  add_to_package_list lsd			# Cool ls replacement
   add_to_package_list tldr
-  add_to_package_list neovim
+  add_to_package_list neovim 			# Text editor
   add_to_package_list git
   add_to_package_list polkit
   add_to_package_list imagemagick
@@ -172,8 +173,7 @@ create_programs_package_list() {
   add_to_package_list pacman-contrib
   add_to_package_list ncdu
   add_to_package_list vnstat
-  add_to_package_list firefox
-  add_to_package_list go
+  add_to_package_list go                        # Yay dependency
 }
 
 create_desktop_package_list() {
@@ -184,7 +184,7 @@ create_desktop_package_list() {
   add_to_package_list grub
   add_to_package_list efibootmgr
   add_to_package_list os-prober
-  add_to_package_list nvidia
+  add_to_package_list nvidia-dkms
   add_to_package_list nvidia-settings
   add_to_package_list xorg
   add_to_package_list xorg-xinit
@@ -241,16 +241,37 @@ echo KEYMAP=br-abnt2 > /etc/vconsole.conf
 echo $HOSTNAME > /etc/hostname
 { echo $PASSWORD; echo $PASSWORD; } | passwd
 
+echo 'Section "InputClass"' > /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'Identifier "system-keyboard"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'MatchIsKeyboard "on"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'Option "XkbLayout" "br"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'Option "XkbModel" "abnt2"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'Option "XkbVariant" "abnt2"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+echo 'EndSection' >> /etc/X11/xorg.conf.d/00-keyboard.conf
+
 useradd -m -G wheel $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=archlinux
+
+grub-install --target=x86_64-efi --efi-directory=/boot/ --bootloader-id=GRUB
 grub-mkconfig -o /boot/grub/grub.cfg
+sed -i 's/#Color/Color/g' /etc/pacman.conf
 
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
+git clone https://github.com/VundleVim/Vundle.vim.git /home/$USERNAME/.vim/bundle/Vundle.vim
+git clone https://aur.archlinux.org/yay.git
+echo "exec iwctl && exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
+> /home/$USERNAME/.bash_profile
 chown $USERNAME -R /home/$USERNAME/
+chgrp $USERNAME -R /home/$USERNAME/
+
+systemctl enable iwd.service
+systemctl enable vnstat.service
+systemctl enable dhcpcd.service
+
+exit
 EOF
 }
 
@@ -333,7 +354,7 @@ bash /home/$USERNAME/scripts/autorice.sh $USERNAME $HOSTNAME
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
-systemctl enable dhcpcd
+systemctl enable dhcpcd.service
 systemctl enable vboxservice.service
 
 exit
