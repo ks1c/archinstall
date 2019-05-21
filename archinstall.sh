@@ -119,61 +119,61 @@ update_mirrors() {
 create_programs_package_list() {
 
   #Current shell
-  add_to_package_list fish
+  add_to_package_list fish			# Shell with completions and suggestions
 
   #Current terminal emulator
-  add_to_package_list termite
+  add_to_package_list termite			# Terminal emulator
 
   #Window manager and bar
-  add_to_package_list dmenu
-  add_to_package_list i3lock
-  add_to_package_list perl-anyevent-i3
-  add_to_package_list perl-json-xs
-  add_to_package_list i3-gaps
-  add_to_package_list alsa-utils
-  add_to_package_list i3blocks
+  add_to_package_list dmenu			# Program launcher and so much more
+  add_to_package_list i3lock			# Lock screen
+  add_to_package_list perl-anyevent-i3		# I3 dependency
+  add_to_package_list perl-json-xs		# I3 dependency
+  add_to_package_list i3-gaps 			# Tilling window manager
+  add_to_package_list alsa-utils		# Controls volume
+  add_to_package_list i3blocks			# Bar
 
   #Appearance
-  add_to_package_list xcursor-bluecurve
-  add_to_package_list papirus-icon-theme
-  add_to_package_list arc-solid-gtk-theme
+  add_to_package_list xcursor-bluecurve		# Mouse cursor theme
+  add_to_package_list papirus-icon-theme	# Icon theme
+  add_to_package_list arc-solid-gtk-theme	# Gtk theme
 
   #Fonts
   add_to_package_list ttf-inconsolata           # My monospace font of preference
   add_to_package_list ttf-croscore		# Google serif/sans fonts
-  add_to_package_list noto-fonts-emoji		# emoji fonts
-  add_to_package_list awesome-terminal-fonts	# symbols/glyphs for bars, etc
-  add_to_package_list powerline-fonts		# font for statusline in vim
-  add_to_package_list noto-fonts		# extra symbols used for statusline in vim
+  add_to_package_list noto-fonts-emoji		# Emoji fonts
+  add_to_package_list awesome-terminal-fonts	# Symbols/glyphs for bars, etc
+  add_to_package_list powerline-fonts		# Font for statusline in vim
+  add_to_package_list noto-fonts		# Extra symbols used for statusline in vim
 
   #General programs and tools
   add_to_package_list compton			# Screen compositor
   add_to_package_list xwallpaper		# X utility for setting wallpaper
-  add_to_package_list libnotify
+  add_to_package_list libnotify			# Send notifications
   add_to_package_list flameshot                 # Screen-shot capture tool
-  add_to_package_list dunst
-  add_to_package_list xdotool
-  add_to_package_list xclip
-  add_to_package_list telegram-desktop
+  add_to_package_list dunst			# Notification server
+  add_to_package_list xdotool			# Fake keyboard/mouse input
+  add_to_package_list xclip			# Clipboard manager
+  add_to_package_list telegram-desktop 		# IM client
   add_to_package_list when                      # Calendar
   add_to_package_list calc                      # Calculator
   add_to_package_list sxiv			# Simple X image viwer
-  add_to_package_list ntfs-3g
-  add_to_package_list rsync
-  add_to_package_list htop
-  add_to_package_list neofetch
+  add_to_package_list ntfs-3g			# MS NTFS implementation
+  add_to_package_list exfat-utils		# Exfat implementation
+  add_to_package_list rsync			# File transfer utility
+  add_to_package_list htop			# System monitor
+  add_to_package_list neofetch			# System fetch
   add_to_package_list vifm			# Terminal based file manager
   add_to_package_list lsd			# Cool ls replacement
-  add_to_package_list tldr
+  add_to_package_list tldr			# Summarizes man pages
   add_to_package_list neovim 			# Text editor
-  add_to_package_list git
-  add_to_package_list polkit
-  add_to_package_list imagemagick
-  add_to_package_list scrot
-  add_to_package_list pacman-contrib
-  add_to_package_list ncdu
-  add_to_package_list vnstat
-  add_to_package_list go                        # Yay dependency
+  add_to_package_list git			# Version control
+  add_to_package_list polkit			# Controls system wide privileges
+  add_to_package_list imagemagick		# Image manipulation tool
+  add_to_package_list scrot			# Used in lock screen
+  add_to_package_list pacman-contrib		# Used in checkupdates
+  add_to_package_list ncdu			# Disk utility
+  add_to_package_list vnstat			# Network traffic monitor
 }
 
 create_desktop_package_list() {
