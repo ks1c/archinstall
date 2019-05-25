@@ -269,7 +269,7 @@ chgrp $USERNAME -R /home/$USERNAME/
 
 systemctl enable iwd.service
 systemctl enable vnstat.service
-systemctl enable dhcpcd.service
+systemctl enable dhcpcd@wlp2s0.service
 
 exit
 EOF
@@ -362,19 +362,6 @@ EOF
 }
 
 main
-
-#pacman --noconfirm --needed -S $PACKAGE_LIST
-#pacman --noconfirm --needed -S reflector
-#reflector --sort rate --save /etc/pacman.d/mirrorlist -c "Brazil" -f 5 -l 5
-# { echo 2; echo y; } | pacman -S virtualbox-guest-utils
-# start/enable iwd.service
-# iwctl
-# device list
-# station interface scan
-# station interface connect network_name
-# device interface show
-
-#X11 errors and warnings
 
 #keyboard
 #keys above 255 or error, comment the lines in /usr/share/X11/xkb/symbols/inet example <I372> or XF86MonBrightnessCycle
