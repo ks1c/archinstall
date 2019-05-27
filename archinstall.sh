@@ -41,6 +41,11 @@ main() {
     echo "done."
   fi
 
+  rm -rf /boot/ini*
+  rm -rf /boot/vmlinuz-linux
+  rm -rf /boot/grub
+  rm -rf /boot/EFI/GRUB
+
   update_mirrors
 
   case $HOSTNAME in
@@ -150,11 +155,9 @@ create_programs_package_list() {
   add_to_package_list compton			# Screen compositor
   add_to_package_list xwallpaper		# X utility for setting wallpaper
   add_to_package_list libnotify			# Send notifications
-  add_to_package_list flameshot                 # Screen-shot capture tool
   add_to_package_list dunst			# Notification server
   add_to_package_list xdotool			# Fake keyboard/mouse input
   add_to_package_list xclip			# Clipboard manager
-  add_to_package_list telegram-desktop 		# IM client
   add_to_package_list when                      # Calendar
   add_to_package_list calc                      # Calculator
   add_to_package_list sxiv			# Simple X image viwer
@@ -188,6 +191,7 @@ create_desktop_package_list() {
   add_to_package_list nvidia-settings
   add_to_package_list xorg
   add_to_package_list xorg-xinit
+  add_to_package_list rng-tools
   add_to_package_list iwd
 
   create_programs_package_list
@@ -262,14 +266,15 @@ git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 git clone https://github.com/VundleVim/Vundle.vim.git /home/$USERNAME/.vim/bundle/Vundle.vim
 git clone https://aur.archlinux.org/yay.git
-echo "exec iwctl && exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
+echo "exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
 > /home/$USERNAME/.bash_profile
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
+systemctl enable rngd.service
 systemctl enable iwd.service
 systemctl enable vnstat.service
-systemctl enable dhcpcd@wlp2s0.service
+systemctl enable dhcpcd.service
 
 exit
 EOF
