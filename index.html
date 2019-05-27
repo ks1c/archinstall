@@ -192,7 +192,8 @@ create_desktop_package_list() {
   add_to_package_list xorg
   add_to_package_list xorg-xinit
   add_to_package_list rng-tools
-  add_to_package_list iwd
+  add_to_package_list dialog
+  add_to_package_list wpa_supplicant
 
   create_programs_package_list
 }
@@ -272,9 +273,7 @@ chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
 systemctl enable rngd.service
-systemctl enable iwd.service
 systemctl enable vnstat.service
-systemctl enable dhcpcd.service
 
 exit
 EOF
