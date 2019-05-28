@@ -350,9 +350,8 @@ git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 git clone https://aur.archlinux.org/yay.git
 git clone https://github.com/VundleVim/Vundle.vim.git /home/$USERNAME/.vim/bundle/Vundle.vim
-
-bash /home/$USERNAME/scripts/autorice.sh $USERNAME $HOSTNAME
-
+echo "exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
+> /home/$USERNAME/.bash_profile
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
