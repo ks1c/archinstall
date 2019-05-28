@@ -183,18 +183,16 @@ create_desktop_package_list() {
   add_to_package_list base
   add_to_package_list base-devel
   add_to_package_list linux-headers
-  add_to_package_list broadcom-wl
   add_to_package_list grub
   add_to_package_list efibootmgr
   add_to_package_list os-prober
   add_to_package_list nvidia-dkms
   add_to_package_list nvidia-settings
+  add_to_package_list broadcom-wl
   add_to_package_list xorg
   add_to_package_list xorg-xinit
-  add_to_package_list iwd
-  #add_to_package_list rng-tools
-  #add_to_package_list dialog
-  #add_to_package_list wpa_supplicant
+  add_to_package_list dialog
+  add_to_package_list wpa_supplicant
 
   create_programs_package_list
 }
@@ -274,8 +272,6 @@ chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
 systemctl enable vnstat.service
-systemctl enable iwd.service
-systemctl enable dhcpcd.service
 
 exit
 EOF
