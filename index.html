@@ -167,6 +167,7 @@ create_programs_package_list() {
   add_to_package_list htop			# System monitor
   add_to_package_list neofetch			# System fetch
   add_to_package_list vifm			# Terminal based file manager
+  add_to_package_list ffmpegthumbnailer		# Video preview on file manager
   add_to_package_list lsd			# Cool ls replacement
   add_to_package_list tldr			# Summarizes man pages
   add_to_package_list neovim 			# Text editor
@@ -210,8 +211,9 @@ create_laptop_package_list() {
   add_to_package_list xf86-video-intel
   add_to_package_list xorg
   add_to_package_list xorg-xinit
-  add_to_package_list iwd
   add_to_package_list acpi
+  add_to_package_list dialog
+  add_to_package_list wpa_supplicant
 
   create_programs_package_list
 }
@@ -304,13 +306,11 @@ git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 git clone https://github.com/VundleVim/Vundle.vim.git /home/$USERNAME/.vim/bundle/Vundle.vim
 git clone https://aur.archlinux.org/yay.git
-echo "exec iwctl && exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
+echo "exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
 > /home/$USERNAME/.bash_profile
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
-systemctl enable iwd.service
-systemctl enable dhcpcd@wlp3s0.service
 systemctl enable vnstat.service
 
 exit
