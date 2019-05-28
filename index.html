@@ -41,10 +41,10 @@ main() {
     echo "done."
   fi
 
-  rm -rf /boot/ini*
-  rm -rf /boot/vmlinuz-linux
-  rm -rf /boot/grub
-  rm -rf /boot/EFI/GRUB
+  rm -rf /mnt/boot/ini*
+  rm -rf /mnt/boot/vmlinuz-linux
+  rm -rf /mnt/boot/grub
+  rm -rf /mnt/boot/EFI/GRUB
 
   update_mirrors
 
@@ -183,7 +183,7 @@ create_desktop_package_list() {
   add_to_package_list base
   add_to_package_list base-devel
   add_to_package_list linux-headers
-  add_to_package_list broadcom-wl-dkms
+  add_to_package_list broadcom-wl
   add_to_package_list grub
   add_to_package_list efibootmgr
   add_to_package_list os-prober
@@ -191,9 +191,10 @@ create_desktop_package_list() {
   add_to_package_list nvidia-settings
   add_to_package_list xorg
   add_to_package_list xorg-xinit
-  add_to_package_list rng-tools
-  add_to_package_list dialog
-  add_to_package_list wpa_supplicant
+  add_to_package_list iwd
+  #add_to_package_list rng-tools
+  #add_to_package_list dialog
+  #add_to_package_list wpa_supplicant
 
   create_programs_package_list
 }
@@ -272,8 +273,9 @@ echo "exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
-systemctl enable rngd.service
 systemctl enable vnstat.service
+systemctl enable iwd.service
+systemctl enable dhcpcd.service
 
 exit
 EOF
@@ -367,5 +369,6 @@ EOF
 
 main
 
+#systemctl enable rngd.service
 #keyboard
 #keys above 255 or error, comment the lines in /usr/share/X11/xkb/symbols/inet example <I372> or XF86MonBrightnessCycle
