@@ -188,7 +188,7 @@ create_desktop_package_list() {
   add_to_package_list os-prober
   add_to_package_list nvidia-dkms
   add_to_package_list nvidia-settings
-  add_to_package_list broadcom-wl
+  add_to_package_list broadcom-wl-dkms
   add_to_package_list xorg
   add_to_package_list xorg-xinit
   add_to_package_list dialog
