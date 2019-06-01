@@ -178,6 +178,7 @@ create_programs_package_list() {
   add_to_package_list pacman-contrib		# Used in checkupdates
   add_to_package_list ncdu			# Disk utility
   add_to_package_list vnstat			# Network traffic monitor
+  add_to_package_list transmission-cli		# Bittorrent client
 }
 
 create_desktop_package_list() {
