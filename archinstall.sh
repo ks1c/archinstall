@@ -182,6 +182,7 @@ create_programs_package_list() {
   add_to_package_list newsboat			# Rss Feed reader
   add_to_package_list mpv			# Video player
   add_to_package_list transmission-cli		# Bittorrent client
+  add_to_package_list rclone			# Gdrive client
 }
 
 create_desktop_package_list() {
