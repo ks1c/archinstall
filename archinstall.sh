@@ -124,7 +124,7 @@ update_mirrors() {
 create_programs_package_list() {
 
   #Current shell
-  add_to_package_list fish			# Shell with completions and suggestions
+  add_to_package_list zsh			# Shell with completions and suggestions
 
   #Current terminal emulator
   add_to_package_list termite			# Terminal emulator
@@ -168,6 +168,7 @@ create_programs_package_list() {
   add_to_package_list neofetch			# System fetch
   add_to_package_list vifm			# Terminal based file manager
   add_to_package_list ffmpegthumbnailer		# Video preview on file manager
+  add_to_package_list ghostscript		# PDF preview on file manager
   add_to_package_list lsd			# Cool ls replacement
   add_to_package_list tldr			# Summarizes man pages
   add_to_package_list neovim 			# Text editor
@@ -179,6 +180,7 @@ create_programs_package_list() {
   add_to_package_list ncdu			# Disk utility
   add_to_package_list vnstat			# Network traffic monitor
   add_to_package_list newsboat			# Rss Feed reader
+  add_to_package_list mpv			# Video player
   add_to_package_list transmission-cli		# Bittorrent client
 }
 
@@ -257,7 +259,7 @@ echo 'Option "XkbModel" "abnt2"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
 echo 'Option "XkbVariant" "abnt2"' >> /etc/X11/xorg.conf.d/00-keyboard.conf
 echo 'EndSection' >> /etc/X11/xorg.conf.d/00-keyboard.conf
 
-useradd -m -G wheel $USERNAME
+useradd -m -G wheel -s /bin/zsh $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
@@ -268,8 +270,6 @@ sed -i 's/#Color/Color/g' /etc/pacman.conf
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
-git clone https://github.com/VundleVim/Vundle.vim.git /home/$USERNAME/.vim/bundle/Vundle.vim
-git clone https://aur.archlinux.org/yay.git
 echo "exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
 > /home/$USERNAME/.bash_profile
 chown $USERNAME -R /home/$USERNAME/
