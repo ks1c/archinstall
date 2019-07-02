@@ -184,7 +184,7 @@ create_programs_package_list() {
   add_to_package_list mpv			# Video player
   add_to_package_list transmission-cli		# Bittorrent client
   add_to_package_list rclone			# Gdrive client
-  add_to_package_list rclone			# Python package manager
+  add_to_package_list python-pip		# Python package manager
 }
 
 create_desktop_package_list() {
