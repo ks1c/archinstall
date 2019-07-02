@@ -184,6 +184,7 @@ create_programs_package_list() {
   add_to_package_list mpv			# Video player
   add_to_package_list transmission-cli		# Bittorrent client
   add_to_package_list rclone			# Gdrive client
+  add_to_package_list rclone			# Python package manager
 }
 
 create_desktop_package_list() {
@@ -273,7 +274,7 @@ cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
 echo "exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
-> /home/$USERNAME/.bash_profile
+> /home/$USERNAME/.zprofile
 chown $USERNAME -R /home/$USERNAME/
 chgrp $USERNAME -R /home/$USERNAME/
 
