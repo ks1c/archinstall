@@ -169,7 +169,7 @@ create_programs_package_list() {
   add_to_package_list vifm			# Terminal based file manager
   add_to_package_list ffmpegthumbnailer		# Video preview on file manager
   add_to_package_list ghostscript		# PDF preview on file manager
-  add_to_package_list lsd			# Cool ls replacement
+  #add_to_package_list lsd			# Cool ls replacement
   add_to_package_list tldr			# Summarizes man pages
   add_to_package_list fzf			# File finder in terminal
   add_to_package_list neovim 			# Text editor
@@ -184,7 +184,7 @@ create_programs_package_list() {
   add_to_package_list mpv			# Video player
   add_to_package_list transmission-cli		# Bittorrent client
   add_to_package_list rclone			# Gdrive client
-  add_to_package_list python-pip		# Python package manager
+  #add_to_package_list python-pip		# Python package manager
 }
 
 create_desktop_package_list() {
