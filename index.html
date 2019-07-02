@@ -170,7 +170,7 @@ create_programs_package_list() {
   add_to_package_list ffmpegthumbnailer		# Video preview on file manager
   add_to_package_list ghostscript		# PDF preview on file manager
   #add_to_package_list lsd			# Cool ls replacement
-  add_to_package_list tldr			# Summarizes man pages
+  #add_to_package_list tldr			# Summarizes man pages
   add_to_package_list fzf			# File finder in terminal
   add_to_package_list neovim 			# Text editor
   add_to_package_list git			# Version control
@@ -181,7 +181,7 @@ create_programs_package_list() {
   add_to_package_list ncdu			# Disk utility
   add_to_package_list vnstat			# Network traffic monitor
   add_to_package_list newsboat			# Rss Feed reader
-  add_to_package_list mpv			# Video player
+  #add_to_package_list mpv			# Video player
   add_to_package_list transmission-cli		# Bittorrent client
   add_to_package_list rclone			# Gdrive client
   #add_to_package_list python-pip		# Python package manager
