@@ -171,6 +171,7 @@ create_programs_package_list() {
   add_to_package_list ghostscript		# PDF preview on file manager
   add_to_package_list lsd			# Cool ls replacement
   add_to_package_list tldr			# Summarizes man pages
+  add_to_package_list fzf			# File finder in terminal
   add_to_package_list neovim 			# Text editor
   add_to_package_list git			# Version control
   add_to_package_list polkit			# Controls system wide privileges
