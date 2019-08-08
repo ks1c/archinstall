@@ -127,16 +127,16 @@ create_programs_package_list() {
   add_to_package_list zsh			# Shell with completions and suggestions
 
   #Current terminal emulator
-  add_to_package_list termite			# Terminal emulator
+  #add_to_package_list termite			# Terminal emulator
 
   #Window manager and bar
   add_to_package_list dmenu			# Program launcher and so much more
-  add_to_package_list i3lock			# Lock screen
-  add_to_package_list perl-anyevent-i3		# I3 dependency
-  add_to_package_list perl-json-xs		# I3 dependency
-  add_to_package_list i3-gaps 			# Tilling window manager
-  add_to_package_list alsa-utils		# Controls volume
-  add_to_package_list i3blocks			# Bar
+  #add_to_package_list i3lock			# Lock screen
+  #add_to_package_list perl-anyevent-i3		# I3 dependency
+  #add_to_package_list perl-json-xs		# I3 dependency
+  #add_to_package_list i3-gaps 			# Tilling window manager
+  #add_to_package_list alsa-utils		# Controls volume
+  #add_to_package_list i3blocks			# Bar
 
   #Appearance
   add_to_package_list xcursor-bluecurve		# Mouse cursor theme
@@ -184,7 +184,7 @@ create_programs_package_list() {
   #add_to_package_list mpv			# Video player
   add_to_package_list transmission-cli		# Bittorrent client
   add_to_package_list rclone			# Gdrive client
-  add_to_package_list sxhkd			# Simple X hotkey daemon
+  #add_to_package_list sxhkd			# Simple X hotkey daemon
   #add_to_package_list python-pip		# Python package manager
 }
 
@@ -212,6 +212,7 @@ create_laptop_package_list() {
   add_to_package_list grub
   add_to_package_list efibootmgr
   add_to_package_list os-prober
+  add_to_package_list mesa
   add_to_package_list bbswitch
   add_to_package_list bumblebee
   add_to_package_list nvidia
@@ -296,7 +297,7 @@ echo LANG=pt_BR.UTF-8 > /etc/locale.conf
 echo $HOSTNAME > /etc/hostname
 { echo $PASSWORD; echo $PASSWORD; } | passwd
 
-useradd -m -G wheel $USERNAME
+useradd -m -G wheel -s /bin/zsh $USERNAME
 { echo $PASSWORD; echo $PASSWORD; } | passwd $USERNAME
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 
@@ -310,8 +311,6 @@ systemctl enable bumblebeed.service
 cd /home/$USERNAME/
 git clone http://github.com/ks1c/scripts
 git clone http://github.com/ks1c/dotfiles
-git clone https://github.com/VundleVim/Vundle.vim.git /home/$USERNAME/.vim/bundle/Vundle.vim
-git clone https://aur.archlinux.org/yay.git
 echo "exec /home/$USERNAME/scripts/autorice.sh -u=$USERNAME -h=$HOSTNAME --post-installation" \
 > /home/$USERNAME/.zprofile
 chown $USERNAME -R /home/$USERNAME/
