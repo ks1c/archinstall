@@ -152,6 +152,7 @@ create_programs_package_list() {
   add_to_package_list noto-fonts		# Extra symbols used for statusline in vim
 
   #General programs and tools
+  add_to_package_list alsa-utils		# Control volume in comand line with amixer
   add_to_package_list compton			# Screen compositor
   add_to_package_list xwallpaper		# X utility for setting wallpaper
   add_to_package_list libnotify			# Send notifications
